@@ -1,0 +1,61 @@
+<div class="row">
+ <form [formGroup]="form" class="col-sm-4" (ngSubmit)="onSubmit()" autocomplete="off" [class.ng-submitted]="submitted">
+ 
+   <div class="form-group ">
+    <label>First Name:</label>
+     <input class="form-control" formControlName="First_Name" id="First_Name" placeholder="First Name" type="text">
+     <div class="invalid-feedback" *ngIf="hasError('First_Name','required')">Please type your First Name.</div>
+    </div>
+   <div class="form-group ">
+     <label>Last Name:</label>
+     <input class="form-control" formControlName="Last_Name" id="Last_Name" placeholder="Last_Name" type="text">
+     <div class="invalid-feedback" *ngIf="hasError('Last_Name','required')">Please type your Last Name.</div>
+   </div>
+   <div class="form-group ">
+     <label>Employee ID:</label>
+     <input class="form-control" formControlName="Employee_ID" id="Employee_ID" placeholder="Employee_ID" type="text">
+     <div class="invalid-feedback" *ngIf="hasError('Employee_ID','required')">Please type your Employee ID.</div>
+   </div>
+   <div class="form-group text-right">
+     <button class="btn btn-sec" type="submit">{{exisitingUser ? "update User":'Add User'}}</button>
+     <button class="btn btn-sec" type="reset">Reset</button>
+   </div>
+ </form>
+</div>
+
+
+<div class="row searchField">
+
+
+    <div class="col-sm-6">
+     <label>search:</label><input type="text" class="grayOut" [(ngModel)]="filterText">
+    </div>
+     <div class="form-group text-right col-sm-6">
+       <label>sort by :</label>
+       <button class="btn btn-sec" (click)="setOrder('First_Name')">First Name</button>
+      <button class="btn btn-sec" (click)="setOrder('Last_Name')">Last Name</button>
+      <button class="btn btn-sec" (click)="setOrder('Employee_ID')">ID</button>
+     </div>
+  
+
+
+
+ </div>
+ <div>
+  <div class="row content" *ngFor="let user of users | orderBy: order:reverse:'case-insensitive'| filter:{ First_Name: filterText, Last_Name: filterText,Employee_ID :filterText} : false">
+   <div class="col-sm-6 seperate-content">
+    <div class="grayOut graybox">{{user.First_Name}}</div>
+    <div class="grayOut graybox">{{user.Last_Name}}</div>
+    <div class="grayOut graybox">{{user.Employee_ID}}</div>
+   </div> 
+   <div class="col-sm-3 seperate-content">
+     <div class="btn-container">
+        <button class="btn btn-sec" type="submit" (click)='editUser(user)'>Edit</button>
+     </div>
+     <div class="btn-container">
+        <button class="btn btn-sec" (click)='deleteUser(user)'>Delete</button>
+     </div>
+   </div>
+ 
+  </div>
+ </div>

@@ -1,0 +1,104 @@
+<div class="row">
+  <form [formGroup]="form" class="col-sm-6" (ngSubmit)="onSubmit()" autocomplete="off" [class.ng-submitted]="submitted">
+  
+    <div class="form-group ">
+     <label>Project:</label>
+      <input class="form-control" formControlName="Project_Name" id="Project_Name" placeholder="Project Name" type="text">
+      <div class="invalid-feedback" *ngIf="hasError('Project_Name','required')">Please type your Project Name.</div>
+     </div>
+     <div class="form-group ">
+         <input class="form-control" formControlName="isChecked" id="isChecked" placeholder="Project Name" type="checkbox" [(ngModel)]='isChecked' (click)="checked()">
+         <span class="checkbox-label" for='isChecked'>
+           set start and end date
+         </span>
+         <input type="date" formControlName="Start_Date" id="Start_Date" placeholder="start date" [attr.disabled]="isChecked?null:''">
+         <input type="date" formControlName="End_Date" id="End_Date" placeholder="End date" [attr.disabled]="isChecked?null:''">
+         <div class="invalid-fedback" *ngIf="form.errors?.dateRange" >End Date should be greater than Start Date.</div>
+        </div>
+     <div class="form-group ">
+        <label>Priority: {{slider}}</label>
+        <input class="form-control" [(ngModel)]="slider"  formControlName="Priority" id="Priority" placeholder="Priority" type="range" min="1" max="30">
+        <div class="invalid-feedback" *ngIf="hasError('Priority','required')">Please type your Priority.</div>
+      </div>
+    <div class="form-group ">
+      <label>Manager:</label>
+      <input class="form-control userId" formControlName="User_ID" id="User_ID" placeholder="User_ID" type="text"> 
+      <button type="button"  class="btn btn-sec" value="search" data-toggle="modal" data-target="#myModal">search</button>
+      <div class="invalid-feedback" *ngIf="hasError('User_ID','required')">Please type your User ID/Manager.</div>
+    </div>
+    <div class="form-group text-right">
+      <button class="btn btn-sec" type="submit">{{exisitingProject ? "update":'Add'}}</button>
+      <button class="btn btn-sec" type="reset">Reset</button>
+    </div>
+  </form>
+ </div>
+     <!-- Modal -->
+ <div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">search user</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+        </div>
+        <div class="modal-body">
+            <ng-select placeholder="Type a user name" [(ngModel)]="selectedUser" (change)="setUserID(selectedUser)">
+   <ng-option *ngFor="let user of users" [value]="user" > {{user.First_Name}} </ng-option>
+   </ng-select>
+       
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+ 
+ <div class="row searchField">
+ 
+ 
+     <div class="col-sm-12">
+      <label>search:</label><input type="text" class="grayOut" [(ngModel)]="filterText">
+     </div>
+      <div class="form-group col-sm-12">
+        <label>sort by :</label>
+        <button class="btn btn-sec" (click)="setOrder('Start_Date')">Start Date</button>
+       <button class="btn btn-sec" (click)="setOrder('End_Date')">End Date</button>
+       <button class="btn btn-sec" (click)="setOrder('Priority')">Priority</button>
+       <button class="btn btn-sec" (click)="setOrder('Status')">Status</button>
+      </div>
+   
+ 
+ 
+ 
+  </div>
+  <div>
+   <div class="row content" *ngFor="let project of projects | orderBy: order:reverse:'case-insensitive'| filter:{ Project_Name: filterText, Status: filterText,Start_Date :filterText,End_Date :filterText} : false">
+    <div class="col-sm-6 seperate-content">
+     <div class="grayOut graybox">
+       <div class="text-left">
+         <p>Label: {{project.Project_Name}}</p>
+
+         <div class="row"><p class="col-sm-6"> No of Tasks: <span [innerHTML]="getTaskCount(project._id)"></span></p><p class="col-sm-6"> status: {{project.Status}} </p></div>
+         <div class="row"><p class="col-sm-6"> Start Date: {{project.Start_Date}}</p><p class="col-sm-6"> End Date: {{project.End_Date}} </p></div>
+       </div>
+       </div>
+    </div> 
+    <div class="col-sm-3 seperate-content">
+      <p class="graybox pribox">{{project.Priority}}</p>
+    </div>
+    <div class="col-sm-3 seperate-content">
+      <div class="btn-container">
+         <button class="btn btn-sec" type="submit" (click)='editUser(project)'>Edit</button>
+      </div>
+      <div class="btn-container">
+         <button class="btn btn-sec" (click)='suspendProject(project)'>Suspend</button>
+      </div>
+    </div>
+  
+   </div>
+  </div>

@@ -1,0 +1,47 @@
+<div class="row searchField">
+  <div class="col-sm-12">
+   <label>search:</label><input type="text" class="grayOut" [(ngModel)]="filterText">
+  </div>
+   <div class="form-group col-sm-12">
+     <label>sort by :</label>
+     <button class="btn btn-sec" (click)="setOrder('Start_Date')">Start Date</button>
+    <button class="btn btn-sec" (click)="setOrder('End_Date')">End Date</button>
+    <button class="btn btn-sec" (click)="setOrder('Priority')">Priority</button>
+    <button class="btn btn-sec" (click)="setOrder('Status')">Status</button>
+   </div>
+</div>
+
+
+
+<div>
+ <div class="row content" *ngFor="let task of tasks| orderBy: order:reverse:'case-insensitive'| filter:{ Task: filterText, Parent_Task: filterText,Start_Date :filterText,End_Date :filterText} : false">
+  <div class="col-sm-3">
+   <p>Task</p>
+   <div class="grayOut graybox">{{task.Task}}</div>
+  </div>
+  <div class="col-sm-3">
+   <p>Parent</p>
+   <div class="grayOut graybox" [innerHTML]="getTaskName(task.Parent_Task)"></div>
+  </div>
+  <div class="col-sm-1">
+   <p>Priority</p>
+   <span>{{task.Priority}}</span>
+  </div>
+  <div class="col-sm-1">
+   <p>Start</p>
+   <span>{{task.Start_Date}}</span>
+
+  </div>
+  <div class="col-sm-1">
+   <p>End</p>
+   <span>{{task.End_Date}}</span>
+
+  </div>
+  <div class="col-sm-3">
+   <p>   </p>
+   <button class="btn btn-sec" type="submit" [disabled] = "task.Status == 'Completed'" (click)="editTask(task)">Edit task</button>
+   <button class="btn btn-sec" (click)="endTask(task)">End Task</button>
+  </div>
+
+ </div>
+</div>

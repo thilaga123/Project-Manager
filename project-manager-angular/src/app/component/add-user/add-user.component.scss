@@ -1,0 +1,53 @@
+.form-control{
+ display: inline-block;
+ width:70%;
+}
+
+label{
+ width: 30%;
+}
+.btn-sec{
+ border-color: black;
+ background-color: gray;
+ margin-right:10px;
+}
+
+//view part
+
+.searchField{
+ border-top:2px solid blue;
+ padding-top:20px;
+ border-bottom: 1px dotted black;
+ margin-bottom: 20px;
+ label{
+  width:40%;
+ }
+ input{
+  width: 60%;
+ }
+}
+.seperate-content{
+ border-bottom: 1px dotted black;
+
+}
+
+.grayOut {
+background-color: lightgray;
+}
+.graybox{
+background-color: lightgray;
+width:80%;
+padding:10px;
+margin-bottom: 10px;
+text-align: center;
+}
+.content{
+ p{
+  margin-bottom: 10px;
+  font-weight: bold;
+ }
+}
+
+.btn-container{
+ padding: 10px;
+}

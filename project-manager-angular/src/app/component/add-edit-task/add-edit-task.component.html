@@ -1,0 +1,131 @@
+<div class="row">
+ <form [formGroup]="form" class="col-sm-8" (ngSubmit)="onSubmit()" autocomplete="off" [class.ng-submitted]="submitted">
+    <div class="form-group ">
+        <label>Project:</label>
+        <input class="form-control userId" formControlName="Project_ID" id="Project_ID" placeholder="Project_ID" type="text" readonly> 
+        <button type="button" class="btn btn-sec" value="search" data-toggle="modal" data-target="#ModalProject">search</button>
+        <div class="invalid-feedback" *ngIf="hasError('Project_ID','required')">Please type your Project ID/Name.</div>
+      </div>
+   <div class="form-group ">
+    <label>Task:</label>
+     <input class="form-control" formControlName="Task" id="Task" placeholder="Task" type="text">
+     <div class="invalid-feedback" *ngIf="hasError('Task','required')">Please type your Task.</div>
+    </div>
+    <div class="form-group ">
+        <input class="form-control" formControlName="isChecked" id="isChecked" placeholder="Project Name" type="checkbox" [(ngModel)]='isChecked' (click)="checked()">
+        <span class="checkbox-label" for='isChecked'>
+         Parent Task
+        </span>
+        </div>
+   <div class="form-group ">
+     <label>Priority: {{slider}}</label>
+     <input class="form-control" [(ngModel)]="slider"  formControlName="Priority" id="Priority" placeholder="Priority" type="range" min="1" max="30" [attr.disabled]="isChecked?'':null">
+     <div class="invalid-feedback" *ngIf="hasError('Priority','required')">Please type your Priority.</div>
+   </div>
+   <div class="form-group ">
+     <label>Parent Task:</label>
+     <input class="form-control userId" formControlName="Parent_Task" id="Parent_Task" placeholder="Parent_Task" readonly type="text" [attr.disabled]="isChecked?'':null">
+     <button type="button"  class="btn btn-sec" value="search" data-toggle="modal" data-target="#ModalParent">search</button>
+     <div class="invalid-feedback" *ngIf="hasError('Parent_Task','required')">Please type your Parent Task.</div>
+   </div>
+  
+   <div class="row">
+      <div class="form-group col-sm-6">
+          <label>Start Date:</label>
+          <input class="form-control" formControlName="Start_Date" id="Start_Date" placeholder="Start_Date" type="date" [attr.disabled]="isChecked?'':null">
+          <div class="invalid-feedback" *ngIf="hasError('Priority','required')">Please type your Start Date.</div>
+        </div>
+        <div class="form-group col-sm-6">
+          <label>End Date:</label>
+          <input class="form-control" formControlName="End_Date" id="End_Date" placeholder="End_Date" type="date" [attr.disabled]="isChecked?'':null">
+          <div class="invalid-feedback" *ngIf="hasError('End_Date','required')">Please type your End Date.</div>
+        </div>
+   </div>
+  
+   <div class="form-group">
+      <label>User:</label>
+      <input class="form-control userId" formControlName="User_ID" id="User_ID" placeholder="User_ID" type="text" readonly [attr.disabled]="isChecked?'':null"> 
+      <button type="button"  class="btn btn-sec" value="search" data-toggle="modal" data-target="#ModalUser">search</button>
+      <div class="invalid-feedback" *ngIf="hasError('User_ID','required')">Please type your User ID/User Name.</div>
+    </div>
+   <div class="form-group text-right">
+     <button class="btn btn-sec" type="submit">{{task ? "update task":'Add task'}}</button>
+     <button class="btn btn-sec" type="reset">Reset</button>
+   </div>
+ </form>
+</div>
+
+     <!-- Modal user -->
+     <div class="modal fade" id="ModalUser">
+        <div class="modal-dialog">
+        
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">search user</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+    
+            </div>
+            <div class="modal-body">
+                <ng-select placeholder="Type a user name" [(ngModel)]="selectedUser" (change)="setUserID(selectedUser)">
+       <ng-option *ngFor="let user of users" [value]="user" > {{user.First_Name}} </ng-option>
+       </ng-select>
+           
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+
+        <!-- Modal project -->
+     <div class="modal fade" id="ModalProject">
+        <div class="modal-dialog">
+        
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">search Project</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+    
+            </div>
+            <div class="modal-body">
+                <ng-select placeholder="Type a project name" [(ngModel)]="selectedProject" (change)="setProjectID(selectedProject)">
+       <ng-option *ngFor="let project of projects" [value]="project" > {{project.Project_Name}} </ng-option>
+       </ng-select>
+           
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+
+        <!-- Modal parent -->
+     <div class="modal fade" id="ModalParent">
+        <div class="modal-dialog">
+        
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">search Project</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+    
+            </div>
+            <div class="modal-body">
+                <ng-select placeholder="Type a parent name" [(ngModel)]="selectedParent" (change)="setParentID(selectedParent)">
+       <ng-option *ngFor="let parent of parents" [value]="parent" > {{parent.Parent_Task}} </ng-option>
+       </ng-select>
+           
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+          
+        </div>
+      </div>

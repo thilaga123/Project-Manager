@@ -1,0 +1,42 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@ng-select/ng-select/themes/default.theme.css";
+$primary: #0033A0;
+$danger: #FF0000;
+$white: #FFF;
+$green:#00B140;
+$gray-light: #E6E6E6;
+$border-gray: #CED4DA;
+
+/* Validation */
+.required::after {
+ content: "*";
+ color: $danger;
+}
+.ng-invalid {
+ &.ng-touched {
+   border-color: $danger;
+   & > .ng-select-container {
+     border-color: $danger !important;
+   }
+ }
+}
+.ng-invalid ~ .invalid-feedback {
+ display: block;
+}
+.ng-submitted {
+ .ng-invalid {
+   border-color: $danger;
+   & > .ng-select-container {
+     border-color: $danger !important;
+   }
+ }
+ .ng-invalid ~ .invalid-feedback {
+   display: block;
+ }
+}
+
+
+.invalid-feedback{
+ margin-left: 30%;
+ font-size: 100% !important;
+}
