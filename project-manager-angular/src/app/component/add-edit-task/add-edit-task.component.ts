@@ -27,7 +27,7 @@ export class AddEditTaskComponent implements OnInit {
     this.service.getAllUsers().subscribe(result => this.users = result);
     this.service.getAllParents().subscribe(results => this.parents = results);
 
-    
+    console.log('this.router',this.router);
     if (this.router.url.split("/")[1] == "edit-task") {
       const key = JSON.parse(this.dataRoute.snapshot.params['task']);
       this.task = key;

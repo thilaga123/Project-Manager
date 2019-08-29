@@ -20,6 +20,7 @@ export class ViewTaskComponent implements OnInit {
     this.service.getAllTasks().subscribe(result=>this.tasks = result);
       }
       endTask(task){
+        console.log("tyesting");
         task.Status = "Completed";
         console.log(task);
         this.service.updateTask(task).subscribe(result=>{
@@ -42,8 +43,9 @@ export class ViewTaskComponent implements OnInit {
         if(id){
           var val= this.filter.transform(this.parents,{'_id' : id },undefined);
           if(val.length >= 0){
-            console.log(val[0].Parent_Task);
+           if(val[0]){
             return val[0].Parent_Task;
+           }
           }
          
         }

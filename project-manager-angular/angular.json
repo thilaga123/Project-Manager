@@ -94,7 +94,11 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "codeCoverageExclude": [
+              "/**/*service.ts",
+              "/**/filters/*.ts"
+          ]
           }
         },
         "lint": {
