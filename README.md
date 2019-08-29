@@ -1,6 +1,12 @@
 # Project-Manager
 FSE final certification 
 
+https://github.com/thilaga123/Project-Manager
+
+username: Thilaga123
+
+password: 25Thila@gmail
+
  Project contains 
   3 folders 
   
