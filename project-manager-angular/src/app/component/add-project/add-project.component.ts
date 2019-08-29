@@ -123,7 +123,7 @@ export class AddProjectComponent implements OnInit {
   getTaskCount(id){
     if(id){
       var val= this.filter.transform(this.tasks,{'Project_ID' : id },undefined);
-      return val.length + 1;
+      return val.length;
      
     }
  else
